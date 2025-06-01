@@ -8,13 +8,14 @@ import Account from "./pages/Account";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./ui/AppLayout";
+import GlobalStyles from "./styles/GlobalStyles";
 
 
 function App() {
 
   return (
     <>
-    <GlobalStyle /> 
+    <GlobalStyles /> 
         <BrowserRouter>
       <Routes>
         <Route element={<AppLayout />} />
