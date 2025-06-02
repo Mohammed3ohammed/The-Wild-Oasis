@@ -56,7 +56,7 @@ const StyledNavLink = styled(NavLink)`
 function MainNav() {
   return (
     <nav>
-      <NavLis>
+      <NavList>
       <li>
         <StyledNavLink to="/dashboard">
         <HiOutlineHome  />
@@ -87,7 +87,7 @@ function MainNav() {
         <span>Settings</span>
         </StyledNavLink>
       </li>
-      </NavLis>
+      </NavList>
     </nav>
   )
 }
