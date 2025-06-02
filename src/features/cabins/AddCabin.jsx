@@ -1,4 +1,5 @@
-
+import Modal from '../../ui/Modal';
+import Button from '../../ui/Button';
 
 
 function AddCabin() {
