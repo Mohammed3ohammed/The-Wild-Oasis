@@ -29,3 +29,17 @@ const Box = styled.div`
     color: var(--color-grey-500);
   }
 `;
+
+function ErrorFallback({ error, resetErrorBoundary }) {
+  return (
+    <StyledErrorFallback>
+      <Box>
+        <h1>Something went wrong 😥</h1>
+        <p>{error.message}</p>
+        <button onClick={resetErrorBoundary}>Try again</button>
+      </Box>
+    </StyledErrorFallback>
+  );
+}
+
+export default ErrorFallback;
