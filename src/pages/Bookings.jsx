@@ -1,11 +1,13 @@
-
+import Heading from "../ui/Heading";
+import Row from "../ui/Row";
 
 function Bookings() {
   return (
-    <div>
-      
-    </div>
+    <Row type="horizontal">
+      <Heading as="h1">All bookings</Heading>
+      <p>TEST</p>
+    </Row>
   )
 }
 
-export default Bookings
+export default Bookings;
