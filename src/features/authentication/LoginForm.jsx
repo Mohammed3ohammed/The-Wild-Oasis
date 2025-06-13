@@ -13,10 +13,10 @@ function LoginForm() {
         <Form onSubmit={handleSubmit}>
             <FormRow label="Email address" orientation="vertical">
                 <Input type="email" id="email" autoComplete="username" value={email}
-                 onChinge={(e) => setEmail(e.target.value)}
+                 onChange={(e) => setEmail(e.target.value)}
                  />
             </FormRow>
-            <FormRow lable="password" orientation="vertical">
+            <FormRow label="password" orientation="vertical">
                 <Input 
                 type="password"
                 id="password"
