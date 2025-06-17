@@ -8,16 +8,12 @@ import Input from '../../ui/Input';
 function UpdatePasswordForm() {
     const {register, handleSubmit, formState, getValues, reset} = useForm();
     const { errors } = formState;
-    const {mutate: updateUser, isLoading: isUpdating } = useUpdateUser();
+    const { updateUser,  isUpdating } = useUpdateUser();
 
     function onSubmit({ password }) {
-        updateUser({password}, {onSuccess: () => reset() });
-    
+        updateUser({password}, {onSuccess: reset});
     }
     
-    function handleReset() {
-        reset();
-    }
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -48,7 +44,7 @@ function UpdatePasswordForm() {
                 />
             </FormRow>
             <FormRow>
-                <Button onClick={handleReset} type='reset' variation='secondary'>
+                <Button onClick={reset} type='reset' variation='secondary'>
                     Cancel
                 </Button>
                 <Button disabled={isUpdating}>Update password</Button>
