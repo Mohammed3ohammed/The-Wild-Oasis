@@ -85,6 +85,7 @@ function SalesChart({ bookings, numDays }) {
           fill={colors.extrasSales.fill}
           strokeWidth={2}
           name='Extras sales'
+             unit="$"
           />
           </AreaChart>
           </ResponsiveContainer>
