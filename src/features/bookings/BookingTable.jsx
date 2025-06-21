@@ -1,7 +1,7 @@
 import BookingRow from '../../features/bookings/BookingRow';
 import Spinner from '../../ui/Spinner';
 import Table from '../../ui/Table';
-import { useBookings } from '../../features/bookings/useBooking';
+import { useBookings } from './useBookings';
 import Menus from '../../ui/Menus';
 import Pagination from '../../ui/Pagination';
 import Empty from '../../ui/Empty';
