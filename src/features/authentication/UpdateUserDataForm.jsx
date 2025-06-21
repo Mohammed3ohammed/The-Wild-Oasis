@@ -1,6 +1,6 @@
 import { useUpdateUser } from './useUpdateUser';
 import { useState } from 'react';
-import { useUser } from 'features/authentication/useUser';
+import { useUser } from '../../features/authentication/useUser';
 import Button from '../../ui/Button';
 import FileInput from '../../ui/FileInput';
 import Form from '../../ui/Form';

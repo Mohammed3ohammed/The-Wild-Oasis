@@ -14,10 +14,10 @@ import Modal from '../../ui/Modal';
 import ConfirmDelete from '../../ui/ConfirmDelete';
 import Table from '../../ui/Table';
 
-import { useDeleteBooking } from 'features/bookings/useDeleteBooking';
+import { useDeleteBooking } from '../../features/bookings/useDeleteBooking';
 import { formatCurrency } from '../../utils/helpers';
 import { formatDistanceFromNow } from '../../utils/helpers';
-import { useCheckout } from 'features/check-in-out/useCheckout';
+import { useCheckout } from '../check-in-out/useCheckin';
 import { format, isToday } from 'date-fns';
 
 

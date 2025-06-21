@@ -9,12 +9,12 @@ import Tag from '../../ui/Tag';
 import ButtonGroup from '../../ui/ButtonGroup';
 import Button from '../../ui/Button';
 import Modal from '../../ui/Modal';
-import ConfirmDelete from 'ui/ConfirmDelete';
+import ConfirmDelete from '../../ui/ConfirmDelete';
 
-import { useBooking } from 'features/bookings/useBooking';
+import { useBooking } from '../../features/bookings/useBooking';
 import { useDeleteBooking } from './useDeleteBooking';
-import { useMoveBack } from 'hooks/useMoveBack';
-import { useCheckout } from 'features/check-in-out/useCheckout';
+import { useMoveBack } from '../../hooks/useMoveBack';
+import { useCheckout } from '../../features/check-in-out/useCheckout';
 import ButtonText from '../../ui/ButtonText';
 
 

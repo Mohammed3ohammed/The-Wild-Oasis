@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import { format } from 'date-fns';
-
-import { box } from 'styles/styles';
+import { format, isToday  } from 'date-fns';
 import { formatDistanceFromNow } from '../../utils/helpers';
-import { isToday } from 'date-fns/esm';
+
+
 import { formatCurrency } from '../../utils/helpers';
 import {
   HiOutlineChatBubbleBottomCenterText,
@@ -11,17 +10,20 @@ import {
   HiOutlineCurrencyDollar,
   HiOutlineHomeModern,
 } from 'react-icons/hi2';
-import DataItem from 'ui/DataItem';
+import DataItem from '../../ui/DataItem';
 import { Flag } from '../../ui/Flag';
 
 const StyledBookingDataBox = styled.section`
-  ${box} /* padding: 3.2rem 4rem; */
+  /* Box */
+  background-color: var(--color-grey-0);
+  border: 1px solid var(--color-grey-100);
+  border-radius: var(--border-radius-md);
+
   overflow: hidden;
 `;
 
 const Header = styled.header`
   background-color: var(--color-brand-500);
-  /* padding: 2.4rem 4rem; */
   padding: 2rem 4rem;
   color: #e0e7ff;
   font-size: 1.8rem;
@@ -44,7 +46,7 @@ const Header = styled.header`
   }
 
   & span {
-    font-family: 'Sono';
+    font-family: "Sono";
     font-size: 2rem;
     margin-left: 4px;
   }
@@ -58,7 +60,6 @@ const Guest = styled.div`
   display: flex;
   align-items: center;
   gap: 1.2rem;
-  /* font-size: 1.8rem; */
   margin-bottom: 1.6rem;
   color: var(--color-grey-500);
 
@@ -77,9 +78,9 @@ const Price = styled.div`
   margin-top: 2.4rem;
 
   background-color: ${(props) =>
-    props.isPaid ? 'var(--color-green-100)' : 'var(--color-yellow-100)'};
+    props.isPaid ? "var(--color-green-100)" : "var(--color-yellow-100)"};
   color: ${(props) =>
-    props.isPaid ? 'var(--color-green-700)' : 'var(--color-yellow-700)'};
+    props.isPaid ? "var(--color-green-700)" : "var(--color-yellow-700)"};
 
   & p:last-child {
     text-transform: uppercase;

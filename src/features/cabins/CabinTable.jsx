@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import CabinRow from '../../features/cabins/CabinRow';
-import { useCabins } from 'features/cabins/useCabins';
+import { useCabins } from '../../features/cabins/useCabins';
 
 function CabinTable() {
     const {cabins} = useCabins();
