@@ -1,97 +1,111 @@
-import { useDarkMode } from '../../context/DarkModeContext';
-import { eachDayOfInterval, format, isSameDay, subDays } from 'date-fns';
+import styled from "styled-components";
+import DashboardBox from "./DashboardBox";
+import Heading from "../../ui/Heading";
 import {
   Area,
   AreaChart,
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
+  XAxis,
   YAxis,
-} from 'recharts';
-import styled from 'styled-components';
-import Heading from '../../ui/Heading';
-import DashboardBox from './DashboardBox';
+} from "recharts";
+import { useDarkMode } from "../../context/DarkModeContext";
+import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
 
 const StyledSalesChart = styled(DashboardBox)`
   grid-column: 1 / -1;
+
+  /* Hack to change grid line colors */
   & .recharts-cartesian-grid-horizontal line,
   & .recharts-cartesian-grid-vertical line {
     stroke: var(--color-grey-300);
   }
 `;
 
-
 function SalesChart({ bookings, numDays }) {
-    const { isDarkMode } = useDarkMode();
+  const { isDarkMode } = useDarkMode();
 
-    const allDates = eachDayOfInterval({
-        start: subDays(new Date(), numDays - 1),
-        end: new Date(),
+  // توليد كل الأيام للفترة المطلوبة
+  const allDates = eachDayOfInterval({
+    start: subDays(new Date(), numDays - 1),
+    end: new Date(),
+  });
+
+  const data = allDates.map((date) => {
+    // فلترة bookings مع التحقق من صحة created_at
+    const validBookings = bookings.filter((booking) => {
+      const bookingDate = new Date(booking.created_at);
+      return !isNaN(bookingDate) && isSameDay(date, bookingDate);
     });
 
-    const data = allDates.map((date) => {
-      return {
-        totalSales: bookings
-        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
-        .reduce((acc, cur) => acc + cur.extrasPrice, 0),
-      };
-    });
+    return {
+      label: format(date, "MMM dd"),
+      totalSales: validBookings.reduce((acc, cur) => acc + cur.totalPrice, 0),
+      extrasSales: validBookings.reduce((acc, cur) => acc + cur.extrasPrice, 0),
+    };
+  });
 
-    const colors = isDarkMode
+  const colors = isDarkMode
     ? {
-        totalSales: { stroke: '#4f46e5', fill: '#4f46e5' },
-        extrasSales: { stroke: '#22c55e', fill: '#22c55e' },
-        text: '#e5e7eb',
-        background: '#18212f',
+        totalSales: { stroke: "#4f46e5", fill: "#4f46e5" },
+        extrasSales: { stroke: "#22c55e", fill: "#22c55e" },
+        text: "#e5e7eb",
+        background: "#18212f",
       }
     : {
-        totalSales: { stroke: '#4f46e5', fill: '#c7d2fe' },
-        extrasSales: { stroke: '#16a34a', fill: '#dcfce7' },
-        text: '#374151',
-        background: '#fff',
+        totalSales: { stroke: "#4f46e5", fill: "#c7d2fe" },
+        extrasSales: { stroke: "#16a34a", fill: "#dcfce7" },
+        text: "#374151",
+        background: "#fff",
       };
 
+  const firstDate = allDates.at(0);
+  const lastDate = allDates.at(-1);
 
-      return (
-        <StyledSalesChart>
-          <Heading type='h2'>
-            Sales from {format(allDates.at(0), 'MMM dd yyyy')} &mdash;{' '}
-            {format(allDates.at(-1), 'MMM ddd yyyy')}
-          </Heading>
-          
-          <ResponsiveContainer width='100%' height={300}>
-          <AreaChart data={data}>
-          <YAxis 
-          unit='$'
-          tick={{fill: colors.text}}
-          tickLine={{stoke: colors.text}}
+  return (
+    <StyledSalesChart>
+      <Heading as="h2">
+        Sales from {firstDate ? format(firstDate, "MMM dd yyyy") : "-"} &mdash;{" "}
+        {lastDate ? format(lastDate, "MMM dd yyyy") : "-"}
+      </Heading>
+
+      <ResponsiveContainer height={300} width="100%">
+        <AreaChart data={data}>
+          <XAxis
+            dataKey="label"
+            tick={{ fill: colors.text }}
+            tickLine={{ stroke: colors.text }}
           />
-          <CartesianGrid strokeDasharray='4' />
+          <YAxis
+            unit="$"
+            tick={{ fill: colors.text }}
+            tickLine={{ stroke: colors.text }}
+          />
+          <CartesianGrid strokeDasharray="4" />
           <Tooltip contentStyle={{ backgroundColor: colors.background }} />
-          <Area 
-          type='monotone'
-          dataKey='totalSales'
-          stroke={colors.totalSales.stroke}
-          fill={colors.totalSales.fill}
-          strokeWidth={2}
-          unit='$'
-          name='Total sales'
+          <Area
+            dataKey="totalSales"
+            type="monotone"
+            stroke={colors.totalSales.stroke}
+            fill={colors.totalSales.fill}
+            strokeWidth={2}
+            name="Total sales"
+            unit="$"
           />
-
-          <Area 
-          type='monotone'
-          dataKey='extrasSales'
-          stroke={colors.extrasSales.stroke}
-          fill={colors.extrasSales.fill}
-          strokeWidth={2}
-          name='Extras sales'
-             unit="$"
+          <Area
+            dataKey="extrasSales"
+            type="monotone"
+            stroke={colors.extrasSales.stroke}
+            fill={colors.extrasSales.fill}
+            strokeWidth={2}
+            name="Extras sales"
+            unit="$"
           />
-          </AreaChart>
-          </ResponsiveContainer>
-        </StyledSalesChart>
-
-      )
+        </AreaChart>
+      </ResponsiveContainer>
+    </StyledSalesChart>
+  );
 }
 
 export default SalesChart;
