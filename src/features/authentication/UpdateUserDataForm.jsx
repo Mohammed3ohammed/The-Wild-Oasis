@@ -1,11 +1,11 @@
 import { useUpdateUser } from './useUpdateUser';
 import { useState } from 'react';
 import { useUser } from '../../features/authentication/useUser';
-import Button from '../../ui/Button';
 import FileInput from '../../ui/FileInput';
 import Form from '../../ui/Form';
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
+import Button from '../../ui/Button';
 
 function UpdateUserDataForm() {
     const {
@@ -53,7 +53,7 @@ function UpdateUserDataForm() {
             </FormRow>
             <FormRow label='Avatar image'>
                 <FileInput 
-                disabled={isUpdating} id='avatar' accept='image/*' onChange={(e) => setAvatar(e.target.files[0])}
+                 id='avatar' accept='image/*' onChange={(e) => setAvatar(e.target.files[0])} disabled={isUpdating}
                 />
             </FormRow>
             <FormRow>

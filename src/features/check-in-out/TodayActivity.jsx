@@ -40,7 +40,7 @@ const NoActivity = styled.p`
   margin-top: 0.8rem;
 `;
 
-function TodayActivity() {
+function TodayActivity () {
     const { activities, isLoading } = useTodayActivity();
     
   return (

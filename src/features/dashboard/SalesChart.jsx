@@ -16,24 +16,22 @@ import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
 const StyledSalesChart = styled(DashboardBox)`
   grid-column: 1 / -1;
 
-  /* Hack to change grid line colors */
   & .recharts-cartesian-grid-horizontal line,
   & .recharts-cartesian-grid-vertical line {
     stroke: var(--color-grey-300);
   }
 `;
 
-function SalesChart({ bookings, numDays }) {
+function SalesChart({ bookings = [], numDays }) {
   const { isDarkMode } = useDarkMode();
 
-  // توليد كل الأيام للفترة المطلوبة
   const allDates = eachDayOfInterval({
     start: subDays(new Date(), numDays - 1),
     end: new Date(),
   });
 
+  // ✅ تعديل: فلترة الـ bookings مع التحقق من صحة التاريخ
   const data = allDates.map((date) => {
-    // فلترة bookings مع التحقق من صحة created_at
     const validBookings = bookings.filter((booking) => {
       const bookingDate = new Date(booking.created_at);
       return !isNaN(bookingDate) && isSameDay(date, bookingDate);
@@ -60,28 +58,17 @@ function SalesChart({ bookings, numDays }) {
         background: "#fff",
       };
 
-  const firstDate = allDates.at(0);
-  const lastDate = allDates.at(-1);
-
   return (
     <StyledSalesChart>
       <Heading as="h2">
-        Sales from {firstDate ? format(firstDate, "MMM dd yyyy") : "-"} &mdash;{" "}
-        {lastDate ? format(lastDate, "MMM dd yyyy") : "-"}
+        Sales from {allDates[0] ? format(allDates[0], "MMM dd yyyy") : "-"} &mdash;{" "}
+        {allDates.at(-1) ? format(allDates.at(-1), "MMM dd yyyy") : "-"}
       </Heading>
 
       <ResponsiveContainer height={300} width="100%">
         <AreaChart data={data}>
-          <XAxis
-            dataKey="label"
-            tick={{ fill: colors.text }}
-            tickLine={{ stroke: colors.text }}
-          />
-          <YAxis
-            unit="$"
-            tick={{ fill: colors.text }}
-            tickLine={{ stroke: colors.text }}
-          />
+          <XAxis dataKey="label" tick={{ fill: colors.text }} tickLine={{ stroke: colors.text }} />
+          <YAxis unit="$" tick={{ fill: colors.text }} tickLine={{ stroke: colors.text }} />
           <CartesianGrid strokeDasharray="4" />
           <Tooltip contentStyle={{ backgroundColor: colors.background }} />
           <Area

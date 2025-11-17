@@ -50,7 +50,7 @@ const Value = styled.p`
 `;
 
 
-function Stat({ icon, title, value, color }) {
+function Stat ({ icon, title, value, color }) {
     return (
         <StyledStat>
             <Icon color={color}>{icon}</Icon>

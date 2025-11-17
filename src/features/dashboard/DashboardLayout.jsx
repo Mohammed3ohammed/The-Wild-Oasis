@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-
-import DurationChart from '../../features/dashboard/DurationChart';
-import SalesChart from '../../features/dashboard/SalesChart';
-import Stats from '../../features/dashboard/Stats';
-import TodayActivity from '../../features/check-in-out/TodayActivity';
-import { useRecentBookings } from '../../features/dashboard/useRecentBookings';
-import Spinner from '../../ui/Spinner';
+import Stats from './Stats';
+import TodayActivity from '../check-in-out/TodayActivity';
+import { useCabins } from '../cabins/useCabins';
 import { useRecentStays } from './useRecentStays';
-import { useCabins } from '../../features/cabins/useCabins';
+import { useRecentBookings } from './useRecentBookings';
+import Spinner from '../../ui/Spinner';
+import SalesChart from './SalesChart';
+import DurationChart from './DurationChart';
+
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -32,8 +32,8 @@ function DashboardLayout() {
             cabinCount={cabins.length}
             />
             <TodayActivity />
-            <DurationChart confirmedStays={confirmedStays} />
-            <SalesChart bookings={bookings} numDays={numDays} />
+            <DurationChart confirmedStays={confirmedStays || []} />
+            <SalesChart bookings={bookings || []} numDays={numDays} />
         </StyledDashboardLayout>
     )
 }
