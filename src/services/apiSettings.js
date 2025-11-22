@@ -5,7 +5,7 @@ export async function getSettings() {
 
     if (error) {
         console.error(error);
-        throw new Error("Settings could not bs loaded");
+        throw new Error("Settings could not be loaded");
     }
     return data;
 }
@@ -19,7 +19,7 @@ export async function updateSetting(newSetting) {
 
     if (error) {
         console.error(error);
-        throw new Error("Settings could not be update");
+        throw new Error("Settings could not be updated");
     }
     return data;
 }

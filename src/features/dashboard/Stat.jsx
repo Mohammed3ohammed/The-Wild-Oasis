@@ -46,7 +46,6 @@ const Value = styled.p`
   font-size: 2.4rem;
   line-height: 1;
   font-weight: 500;
-  /* color: var(--color-grey-600); */
 `;
 
 

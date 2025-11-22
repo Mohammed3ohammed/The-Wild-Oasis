@@ -10,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useDarkMode } from "../../context/DarkModeContext";
+import { useDarkMode } from "../../context/useDarkMode";
 import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
 
 const StyledSalesChart = styled(DashboardBox)`
@@ -22,7 +22,7 @@ const StyledSalesChart = styled(DashboardBox)`
   }
 `;
 
-function SalesChart({ bookings = [], numDays }) {
+function SalesChart({ bookings , numDays }) {
   const { isDarkMode } = useDarkMode();
 
   const allDates = eachDayOfInterval({
@@ -30,17 +30,17 @@ function SalesChart({ bookings = [], numDays }) {
     end: new Date(),
   });
 
-  // ✅ تعديل: فلترة الـ bookings مع التحقق من صحة التاريخ
   const data = allDates.map((date) => {
-    const validBookings = bookings.filter((booking) => {
-      const bookingDate = new Date(booking.created_at);
-      return !isNaN(bookingDate) && isSameDay(date, bookingDate);
-    });
 
     return {
       label: format(date, "MMM dd"),
-      totalSales: validBookings.reduce((acc, cur) => acc + cur.totalPrice, 0),
-      extrasSales: validBookings.reduce((acc, cur) => acc + cur.extrasPrice, 0),
+      totalSales: bookings
+      .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+      .reduce((acc, cur) => acc + cur.totalPrice, 0),
+
+      extrasSales: bookings
+      .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+      .reduce((acc, cur) => acc + cur.extrasPrice, 0),
     };
   });
 
@@ -61,7 +61,7 @@ function SalesChart({ bookings = [], numDays }) {
   return (
     <StyledSalesChart>
       <Heading as="h2">
-        Sales from {allDates[0] ? format(allDates[0], "MMM dd yyyy") : "-"} &mdash;{" "}
+        Sales from {format(allDates.at(0), "MMM dd yyyy")} &mdash;{" "}
         {allDates.at(-1) ? format(allDates.at(-1), "MMM dd yyyy") : "-"}
       </Heading>
 
